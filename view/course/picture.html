@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>邻域兄弟管理系统</title>
+    <!-- <?php include('./views/common/style.html') ?> -->
+    <link rel="stylesheet" href="../../public/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../public/assets/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="../../public/assets/nprogress/nprogress.css">
+    <link rel="stylesheet" href="../../public/less/index.css">
+    <link rel="stylesheet" type="text/css" href="/public/assets/jquery-jcrop/css/Jcrop.css">
+</head>
+
+<body>
+    <!-- 侧边栏 -->
+    <!-- <?php include('./views/common/aside.html') ?> -->
+    <div class="aside">
+        <!-- 个人资料 -->
+        <div class="profile">
+            <!-- 头像 -->
+            <div class="avatar img-circle">
+                <img src="../../uploads/avatar.jpg">
+            </div>
+            <h4>鸡汤小弟</h4>
+        </div>
+        <!-- 导航菜单 -->
+        <div class="navs">
+            <ul class="list-unstyled">
+                <li>
+                    <a href="/">
+                        <i class="fa fa-home"></i>
+                        仪表盘
+                    </a>
+                </li>
+                <li>
+                    <a href="../teacher/list">
+                        <i class="fa fa-bell"></i>
+                        讲师管理
+                    </a>
+                </li>
+                <li>
+                    <a href="../category/list">
+                        <i class="fa fa-bell"></i>
+                        分类管理
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="fa fa-cog"></i>
+                        课程管理
+                        <i class="arrow fa fa-angle-right"></i>
+                    </a>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="../course/add">
+                                课程添加
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../course/list">
+                                课程列表
+                            </a>
+                        </li>
+                        <!-- <li>
+                        <a href="/index.php/course/topic">
+                            课程专题
+                        </a>
+                    </li> -->
+                    </ul>
+                </li>
+                <!-- <li>
+                <a href="/index.php/advert/list">
+                    <i class="fa fa-bell"></i>
+                    广告管理
+                </a>
+            </li>-->
+                <li>
+                    <a href="javascript:;">
+                        <i class="fa fa-cog"></i>
+                        系统设置
+                        <i class="arrow fa fa-angle-right"></i>
+                    </a>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="javascript:;">
+                                网站设置
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;">
+                                权限管理
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- 主体 -->
+    <div class="main">
+        <div class="container-fluid">
+            <!-- 头部 -->
+            <!-- <?php include('./views/common/header.html') ?> -->
+            <div class="header">
+                <nav class="navbar navbar-custom">
+                    <div class="navbar-header">
+                        <a href="javascript:;" class="navbar-brand">
+                            <i class="fa fa-navicon"></i>
+                        </a>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="javascript:;">
+                                <i class="fa fa-bell"></i>
+                                <span class="badge">8</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./settings">
+                                <i class="fa fa-user"></i>
+                                个人中心
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" id="logout">
+                                <i class="fa fa-sign-out"></i>
+                                退出
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;">
+                                <i class="fa fa-tasks"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="body course-add" id="picture">
+
+            </div>
+        </div>
+    </div>
+    <script type="text/template" id="tpl">
+        <!-- 面包屑 -->
+        <ol class="breadcrumb">
+            <li>
+                <a href="javascript:;">课程管理</a>
+            </li>
+            <li class="active">课程添加</li>
+        </ol>
+        <div class="steps">
+            <!-- 摘要 -->
+            <div class="brief">
+                <div class="thumb">
+                    {{if cs_cover}}
+                    <img src="{{cs_cover}}" alt=""> {{/if}}
+                </div>
+                <dl class="info">
+                    <dt>{{cs_name}}</dt>
+                    <dd>讲师：{{tc_name}}</dd>
+                </dl>
+            </div>
+            <!-- 步聚 -->
+            <ul class="forwards list-unstyled">
+                <li>
+                    <a href="/course/basic?cs_id={{cs_id}}" class="done">
+                        <b class="fa fa-check"></b>
+                        基本信息
+                    </a>
+                </li>
+                <li>
+                    <a href="/course/picture?cs_id={{cs_id}}" class="active">
+                        <b>2</b>
+                        课程图片
+                    </a>
+                </li>
+                <li>
+                    <a href="/course/lesson?cs_id={{cs_id}}">
+                        <b>3</b>
+                        课时管理
+                    </a>
+                </li>
+            </ul>
+            <!-- 课程图片 -->
+            <div class="content">
+                <!-- 标题 -->
+                <div class="title">
+                    <h5>课程图片
+                        <small>COURSE PICTURE</small>
+                    </h5>
+                </div>
+                <!-- 上传图片 -->
+                <div class="picture col-md-offset-2">
+                    <div class="preview">
+                        {{ if cs_cover_original }}
+                        <img src="{{ cs_cover_original }}"> {{ else }}
+                        <img src="/public/images/course.png"> {{ /if }}
+                    </div>
+                    <p class="tips">
+                        可上传jpg, gif, png格式文件, 图片建议尺寸大于300x150，文件大小不能超过2M。
+                    </p>
+                    <div class="col-md-2">
+                        <input type="file" id="upfile">
+                    </div>
+                    <div class="col-md-2">
+                        {{ if cs_cover_original }}
+                        <input type="button" class="btn btn-warning btn-sm" value="裁切图片" id="crop" data-status="crop"> {{ else }}
+                        <input type="button" disabled class="btn btn-warning btn-sm" value="裁切图片" id="crop"> {{ /if }}
+                    </div>
+                    <form style="display: none;" id="coords">
+                        <input type="hidden" name="x">
+                        <input type="hidden" name="y">
+                        <input type="hidden" name="w">
+                        <input type="hidden" name="h">
+                        <input type="hidden" name="cs_id" id="csID" value="{{ cs_id }}">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </script>
+    <!-- <?php include('./views/common/script.html') ?> -->
+    <script src="../../public/assets/require/require.js"></script>
+    <script src="../../public/js/config.js"></script>
+    <script type="text/javascript">
+        require(['js/common', 'bootstrap']);
+    </script>
+    <script type="text/javascript">
+        require(['js/course-picture']);
+    </script>
+
+</body>
+
+</html>

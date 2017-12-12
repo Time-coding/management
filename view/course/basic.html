@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>邻域兄弟管理系统</title>
+    <!-- <?php include('./views/common/style.html') ?> -->
+    <link rel="stylesheet" href="../../public/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../public/assets/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="../../public/assets/nprogress/nprogress.css">
+    <link rel="stylesheet" href="../../public/less/index.css">
+    <link rel="stylesheet" type="text/css" href="../../public/assets/bootstrap-datepicker/css/bootstrap-datepicker.css">
+</head>
+
+<body>
+    <!-- 侧边栏 -->
+    <!-- <?php include('./views/common/aside.html') ?> -->
+    <div class="aside">
+        <!-- 个人资料 -->
+        <div class="profile">
+            <!-- 头像 -->
+            <div class="avatar img-circle">
+                <img src="../../uploads/avatar.jpg">
+            </div>
+            <h4>鸡汤小弟</h4>
+        </div>
+        <!-- 导航菜单 -->
+        <div class="navs">
+            <ul class="list-unstyled">
+                <li>
+                    <a href="/">
+                        <i class="fa fa-home"></i>
+                        仪表盘
+                    </a>
+                </li>
+                <li>
+                    <a href="../teacher/list">
+                        <i class="fa fa-bell"></i>
+                        讲师管理
+                    </a>
+                </li>
+                <li>
+                    <a href="../category/list">
+                        <i class="fa fa-bell"></i>
+                        分类管理
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="fa fa-cog"></i>
+                        课程管理
+                        <i class="arrow fa fa-angle-right"></i>
+                    </a>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="../course/add">
+                                课程添加
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../course/list">
+                                课程列表
+                            </a>
+                        </li>
+                        <!-- <li>
+                        <a href="/index.php/course/topic">
+                            课程专题
+                        </a>
+                    </li> -->
+                    </ul>
+                </li>
+                <!-- <li>
+                <a href="/index.php/advert/list">
+                    <i class="fa fa-bell"></i>
+                    广告管理
+                </a>
+            </li>-->
+                <li>
+                    <a href="javascript:;">
+                        <i class="fa fa-cog"></i>
+                        系统设置
+                        <i class="arrow fa fa-angle-right"></i>
+                    </a>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="javascript:;">
+                                网站设置
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;">
+                                权限管理
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- 主体 -->
+    <div class="main">
+        <div class="container-fluid">
+            <!-- 头部 -->
+            <!-- <?php include('./views/common/header.html') ?> -->
+            <div class="header">
+                <nav class="navbar navbar-custom">
+                    <div class="navbar-header">
+                        <a href="javascript:;" class="navbar-brand">
+                            <i class="fa fa-navicon"></i>
+                        </a>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="javascript:;">
+                                <i class="fa fa-bell"></i>
+                                <span class="badge">8</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./settings">
+                                <i class="fa fa-user"></i>
+                                个人中心
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" id="logout">
+                                <i class="fa fa-sign-out"></i>
+                                退出
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;">
+                                <i class="fa fa-tasks"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="body course-add" id="basic">
+            </div>
+        </div>
+    </div>
+    <script type="text/template" id="basicTpl">
+        <!-- 面包屑 -->
+        <ol class="breadcrumb">
+            <li>
+                <a href="javascript:;">课程管理</a>
+            </li>
+            <li class="active">课程添加</li>
+        </ol>
+        <div class="steps">
+            <!-- 摘要 -->
+            <div class="brief">
+                <div class="thumb">
+                    <img src="{{cs_cover}}" alt="">
+                </div>
+                <dl class="info">
+                    <dt>{{cs_name}}</dt>
+                    {{if tc_name}}
+                    <dd>讲师：{{tc_name}}</dd>
+                    {{/if}}
+                </dl>
+            </div>
+            <!-- 步聚 -->
+            <ul class="forwards list-unstyled">
+                <li>
+                    <a href="/course/basic?cs_id={{cs_id}}" class="active">
+                        <b>1</b> 基本信息
+                    </a>
+                </li>
+                <li>
+                    <a href="/course/picture?cs_id={{cs_id}}">
+                        <b>2</b> 课程图片
+                    </a>
+                </li>
+                <li>
+                    <a href="/course/lesson?cs_id={{cs_id}}">
+                        <b>3</b> 课时管理
+                    </a>
+                </li>
+            </ul>
+            <!-- 基本信息 -->
+            <div class="content">
+                <!-- 标题 -->
+                <div class="title">
+                    <h5>基本信息
+                        <small>BASIC INFORMATION</small>
+                    </h5>
+                </div>
+                <form id="basicForm" class="basic form-horizontal">
+                    <input type="hidden" name="cs_id" value="{{cs_id}}">
+                    <div class="form-group">
+                        <label for="" class="col-md-2 control-label">标题</label>
+                        <div class="col-md-8">
+                            <input type="text" name="cs_name" data-required class="form-control input-sm" value="{{cs_name}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-md-2 control-label">课程描述</label>
+                        <div class="col-md-8 ckeditor">
+                            <textarea id="ckeditor" name="cs_brief" rows="15" class="form-control input-sm">
+                                    {{cs_brief}}
+                                </textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-md-2 control-label">讲师</label>
+                        <div class="col-md-8">
+                            <select name="cs_tc_id" class="form-control input-sm">
+                                <option value="">请选择讲师</option>
+                                {{each teacher as item}}
+                                <option value="{{item.tc_id}}">{{item.tc_name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-md-2 control-label">分类</label>
+                        <div class="col-md-8">
+                            <select id="top" class="form-control input-sm">
+                                <option value="">请选择分类</option>
+                                {{each category.top as item}}
+                                <option value="{{item.cg_id}}">{{item.cg_name}}</option>
+                                {{/each}}
+                            </select>
+                            <select name="cs_cg_id" id="child" class="form-control input-sm">
+                                <option value="">请选择分类</option>
+                                {{each category.child as item}}
+                                <option value="{{item.cg_id}}">{{item.cg_name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-md-2 control-label">标签</label>
+                        <div class="col-md-8">
+                            <input name="cs_tags" value="{{cs_tags}}" type="text" class="form-control input-sm">
+                            <p class="help-block">将会应用于按标签搜索课程、相关课程的提取等</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <input type="submit" class="btn btn-success btn-sm pull-right" value="保 存">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <!-- <?php include('./views/common/script.html') ?> -->
+    <script src="../../public/assets/require/require.js"></script>
+    <script src="../../public/js/config.js"></script>
+    <script type="text/javascript">
+        require(['js/common', 'bootstrap']);
+    </script>
+    <script type="text/javascript">
+        require(['js/course-basic']);
+    </script>
+</body>
+
+</html>
